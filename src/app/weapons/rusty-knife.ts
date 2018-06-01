@@ -1,6 +1,6 @@
-import { Weapon } from "./weapon";
+import { Weapon } from './weapon';
 
-export abstract class RustyKnife extends Weapon {
+export class RustyKnife extends Weapon {
     public damage = 2;
-    public name = "Rusty Knife";
+    public name = 'Rusty Knife';
 }

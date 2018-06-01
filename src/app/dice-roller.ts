@@ -1,9 +1,4 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class DiceRollerService {
+export class DiceRoller {
   constructor() { }
 
   public RollDice(numberOfSides: number, numberOfTimesToRoll: number): number {
@@ -16,7 +11,9 @@ export class DiceRollerService {
     return total;
   }
 
-  public GetRandomNumber(minimum: number, maximum: number): number {
-    return Math.floor(Math.random() * (maximum - minimum + 1) + minimum);
+  public GetRandomNumber(min: number, max: number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
