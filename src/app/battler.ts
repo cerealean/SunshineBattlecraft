@@ -1,5 +1,5 @@
 import { Character } from './characters/character';
-import { DiceRoller } from './dice-roller';
+import { DiceRoller } from './dice-rollerr/dice-roller';
 import { Army } from './characters/army';
 
 
@@ -23,7 +23,7 @@ export class Battler {
                     this.AttackCharacter(secondBattler, firstBattler);
                     this.AttackCharacter(firstBattler, secondBattler);
                 } else {
-                    const coinFlip = !!this.diceRoller.GetRandomNumber(0, 1);
+                    const coinFlip = !!this.diceRoller.FlipCoin();
                     if (coinFlip) {
                         this.AttackCharacter(firstBattler, secondBattler);
                         this.AttackCharacter(secondBattler, firstBattler);
