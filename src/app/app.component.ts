@@ -24,7 +24,7 @@ export class AppComponent {
     const battler = new Battler();
 
     const pearseSoldiers: Character[] = [];
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 150; i++) {
       pearseSoldiers.push(new Developer('developer' + i + ' of Pearse'));
     }
     const pearseArmy = new Army('Pearse', pearseSoldiers);
@@ -39,6 +39,6 @@ export class AppComponent {
 
     battler.DoBattle(pearseArmy, sunshineArmy);
 
-    return battler.battleLog;
+    return battler.battleLog.reverse();
   }
 }
