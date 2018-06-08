@@ -1,4 +1,4 @@
-<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+<nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="https://bulma.io">
       <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
@@ -12,13 +12,16 @@
   </div>
   <div class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item">
-        Home
+      <a class="navbar-item" routerLink="/structures">
+        Structures
+      </a>
+      <a class="navbar-item" routerLink="/units">
+        Units
       </a>
     </div>
     <div class="navbar-end">
       <div class="navbar-item">
-        Login
+        <user-currency-display></user-currency-display>
       </div>
     </div>
   </div>
