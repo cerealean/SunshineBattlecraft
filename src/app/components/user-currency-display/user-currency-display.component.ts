@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { TickerService } from '../../services/ticker.service';
 
 @Component({
   selector: 'user-currency-display',
   templateUrl: './user-currency-display.component.html',
-  styleUrls: ['./user-currency-display.component.scss']
+  styleUrls: ['./user-currency-display.component.scss'],
+  providers: [TickerService]
 })
 export class UserCurrencyDisplayComponent implements OnInit {
   public gold: number;
@@ -11,8 +13,8 @@ export class UserCurrencyDisplayComponent implements OnInit {
   public metal: number;
   private nextTick: Date;
 
-  constructor() {
-    this.nextTick = new Date(new Date().getTime() + this.ConvertMinutesToMilliseconds(1));
+  constructor(private tickerService: TickerService) {
+    this.nextTick = tickerService.GetNextTick();
   }
 
   ngOnInit() {
@@ -22,7 +24,7 @@ export class UserCurrencyDisplayComponent implements OnInit {
   }
 
   public OnHitZero() {
-    this.nextTick = new Date(new Date().getTime() + this.ConvertMinutesToMilliseconds(1));
+    this.nextTick = this.tickerService.GetNextTick();
   }
 
   private ConvertMinutesToMilliseconds(minutes: number): number {

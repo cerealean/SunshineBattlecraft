@@ -11,13 +11,26 @@ export class TickerService implements OnInit, OnDestroy {
   private counter$: Observable<number>;
   private subscription: Subscription;
   private tickEvent = new EventEmitter<TickEvent>();
+  private otherSubscription: any;
+
+  constructor() {
+    this.nextTick = this.GenerateNextTick();
+  }
+
+  public GetNextTick() {
+    return this.nextTick;
+  }
 
   public GetTickEvent(): EventEmitter<TickEvent> {
     return this.tickEvent;
   }
 
+  public GetSecondsUntilNextTick(): number {
+    return (this.nextTick.getTime() - new Date().getTime()) / 1000;
+  }
+
   ngOnDestroy(): void {
-    this.nextTick = this.GetNextTick();
+    this.nextTick = this.GenerateNextTick();
     this.StartTicker();
   }
 
@@ -25,19 +38,22 @@ export class TickerService implements OnInit, OnDestroy {
     this.StopTicker();
   }
 
-  private GetNextTick() {
+  private GenerateNextTick() {
     return new Date(new Date().getTime() + this.ConvertMinutesToMilliseconds(1));
   }
 
   private StartTicker() {
     this.counter$ = interval(1000).pipe(map(() => {
-      return Math.floor((this.nextTick.getTime() - new Date().getTime()) / 1000);
+      return Math.floor(this.GetSecondsUntilNextTick());
     }));
     this.subscription = this.counter$.subscribe((timeUntil) => {
       if (timeUntil === 0) {
-        this.tickEvent.emit(new TickEvent(new Date()));
-        this.nextTick = this.GetNextTick();
+        this.nextTick = this.GenerateNextTick();
+        this.tickEvent.emit(new TickEvent(new Date(), this.nextTick));
       }
+    });
+    this.otherSubscription = this.tickEvent.subscribe(() => {
+      console.log('Ticked!');
     });
   }
 
