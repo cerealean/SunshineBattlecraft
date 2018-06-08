@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Subscription, Observable, interval } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -8,32 +8,32 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./time-until.component.scss']
 })
 export class TimeUntilComponent implements OnInit, OnDestroy {
+  public minutesUntil = 0;
+  public secondsUntil = 0;
+
   @Input() private date: Date;
+  @Output() private hitZero: EventEmitter<boolean> = new EventEmitter<boolean>();
   private counter$: Observable<number>;
   private subscription: Subscription;
-  private message: string;
 
   ngOnInit() {
-    this.counter$ = interval(1000).pipe(map((x) => {
-      return Math.floor((this.date.getTime() - new Date().getTime()) / 1000);
+    this.counter$ = interval(1000).pipe(map(() => {
+      const timeDifference = Math.floor((this.date.getTime() - new Date().getTime()) / 1000);
+      if (timeDifference === 0) {
+        this.hitZero.emit(true);
+      }
+      return timeDifference;
     }));
 
-    this.subscription = this.counter$.subscribe((x) => this.message = this.GenerateMessage(x));
+    this.subscription = this.counter$.subscribe((timeUntil) => this.GenerateMessage(timeUntil));
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  private GenerateMessage(t) {
-    let minutes, seconds;
-    minutes = Math.floor(t / 60) % 60;
-    t -= minutes * 60;
-    seconds = t % 60;
-
-    return [
-      minutes + 'm',
-      seconds + 's'
-    ].join(' ');
+  private GenerateMessage(timeUntil: number) {
+    this.minutesUntil = Math.floor(timeUntil / 60) % 60;
+    this.secondsUntil = timeUntil - (this.minutesUntil * 60) % 60;
   }
 }

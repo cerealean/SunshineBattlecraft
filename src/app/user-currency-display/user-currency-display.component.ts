@@ -11,7 +11,7 @@ export class UserCurrencyDisplayComponent implements OnInit {
   public metal: number;
   private nextTick: Date;
 
-  constructor() { 
+  constructor() {
     this.nextTick = new Date(new Date().getTime() + this.ConvertMinutesToMilliseconds(1));
   }
 
@@ -19,6 +19,10 @@ export class UserCurrencyDisplayComponent implements OnInit {
     this.gold = 0;
     this.wood = 0;
     this.metal = 0;
+  }
+
+  public OnHitZero() {
+    this.nextTick = new Date(new Date().getTime() + this.ConvertMinutesToMilliseconds(1));
   }
 
   private ConvertMinutesToMilliseconds(minutes: number): number {

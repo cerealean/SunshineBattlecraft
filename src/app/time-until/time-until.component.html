@@ -1,1 +1,2 @@
-{{message}}
+<span *ngIf="minutesUntil > 0 || secondsUntil > 0; else defaultMessage">{{minutesUntil}}m, {{secondsUntil}}s</span>
+<ng-template #defaultMessage>Loading...</ng-template>
