@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, interval, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TickEvent } from '../models/tick-event';
@@ -6,15 +6,15 @@ import { TickEvent } from '../models/tick-event';
 @Injectable({
   providedIn: 'root'
 })
-export class TickerService implements OnInit, OnDestroy {
+export class TickerService {
   private nextTick: Date;
   private counter$: Observable<number>;
   private subscription: Subscription;
   private tickEvent = new EventEmitter<TickEvent>();
-  private otherSubscription: any;
 
   constructor() {
     this.nextTick = this.GenerateNextTick();
+    this.StartTicker();
   }
 
   public GetNextTick() {
@@ -29,17 +29,8 @@ export class TickerService implements OnInit, OnDestroy {
     return (this.nextTick.getTime() - new Date().getTime()) / 1000;
   }
 
-  ngOnDestroy(): void {
-    this.nextTick = this.GenerateNextTick();
-    this.StartTicker();
-  }
-
-  ngOnInit(): void {
-    this.StopTicker();
-  }
-
   private GenerateNextTick() {
-    return new Date(new Date().getTime() + this.ConvertMinutesToMilliseconds(1));
+    return new Date(new Date().getTime() + this.ConvertMinutesToMilliseconds(.2));
   }
 
   private StartTicker() {
@@ -52,14 +43,6 @@ export class TickerService implements OnInit, OnDestroy {
         this.tickEvent.emit(new TickEvent(new Date(), this.nextTick));
       }
     });
-    this.otherSubscription = this.tickEvent.subscribe(() => {
-      console.log('Ticked!');
-    });
-  }
-
-  private StopTicker() {
-    this.subscription.unsubscribe();
-    this.counter$ = null;
   }
 
   private ConvertMinutesToMilliseconds(minutes: number): number {
