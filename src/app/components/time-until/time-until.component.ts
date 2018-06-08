@@ -25,14 +25,14 @@ export class TimeUntilComponent implements OnInit, OnDestroy {
       return timeDifference;
     }));
 
-    this.subscription = this.counter$.subscribe((timeUntil) => this.GenerateMessage(timeUntil));
+    this.subscription = this.counter$.subscribe((timeUntil) => this.UpdateTimes(timeUntil));
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  private GenerateMessage(timeUntil: number) {
+  private UpdateTimes(timeUntil: number) {
     this.minutesUntil = Math.floor(timeUntil / 60) % 60;
     this.secondsUntil = timeUntil - (this.minutesUntil * 60) % 60;
   }
