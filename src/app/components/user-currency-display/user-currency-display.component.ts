@@ -26,8 +26,4 @@ export class UserCurrencyDisplayComponent implements OnInit {
     this.wood = 0;
     this.metal = 0;
   }
-
-  private ConvertMinutesToMilliseconds(minutes: number): number {
-    return minutes * 60000;
-  }
 }
