@@ -1,9 +1,19 @@
 <section class="section">
-  <div class="container is-fluid" *ngFor="let structure of structures">
-    <div class="notification">
-      <h1 class="title">{{structure.name}}</h1>
-      <h2 class="subtitle">{{structure.description}}</h2>
-      <span><strong>Created on:</strong>{{structure.createdOn}}</span>
+  <div class="container is-fluid">
+    <div class="media" *ngFor="let group of structures | groupBy:'name'">
+      <div class="media-content">
+        <div class="box">
+          <h1 class="title">{{group.value[0].name}} ({{group.value.length}})</h1>
+          <h2 class="subtitle">{{group.value[0].description}}</h2>
+          <div class="media">
+            <div class="media-content">
+              <div class="notification" *ngFor="let structure of group.value">
+                {{structure.name}} created on {{structure.createdOn | date:'short'}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</section>>
+</section>

@@ -7,6 +7,7 @@ import { StructuresComponent } from './components/structures/structures.componen
 import { UnitsComponent } from './components/units/units.component';
 import { UserCurrencyDisplayComponent } from './components/user-currency-display/user-currency-display.component';
 import { TimeUntilComponent } from './components/time-until/time-until.component';
+import { GroupByPipe } from './group-by.pipe';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TimeUntilComponent } from './components/time-until/time-until.component
     StructuresComponent,
     UnitsComponent,
     UserCurrencyDisplayComponent,
-    TimeUntilComponent
+    TimeUntilComponent,
+    GroupByPipe
   ],
   imports: [
     BrowserModule,
