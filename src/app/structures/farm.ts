@@ -2,9 +2,9 @@ import { Structure } from './structure';
 import { TickAction } from '../models/tick-action';
 import { PlayerCurrency } from '../models/player-currency';
 
-export class Farm extends Structure { 
-    public name = "Farm";
-    public description = "Generates food for your community";
+export class Farm extends Structure {
+    public name = 'Farm';
+    public description = 'Generates food for your community';
     public OnTick(): TickAction {
         const playerCurrency = new PlayerCurrency();
         playerCurrency.food = 10;

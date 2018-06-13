@@ -17,4 +17,8 @@ export class StructuresComponent implements OnInit {
     this.structures = this.playerControllerService.playerStructures;
   }
 
+  toggleVisibility($event: MouseEvent) {
+    console.log($event.target);
+  }
+
 }
