@@ -1,5 +1,5 @@
-import { Currency } from "./currency";
+import { PlayerCurrency } from "./player-currency";
 
 export class TickAction {
-    public CurrencyChange: Currency[] = [];
+    public CurrencyChange?: PlayerCurrency = new PlayerCurrency();
 }

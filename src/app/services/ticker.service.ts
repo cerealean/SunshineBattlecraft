@@ -7,7 +7,7 @@ import { TickEvent } from '../models/tick-event';
   providedIn: 'root'
 })
 export class TickerService {
-  private nextTick: Date;
+  public nextTick: Date;
   private counter$: Observable<number>;
   private subscription: Subscription;
   private tickEvent = new EventEmitter<TickEvent>();
@@ -17,15 +17,11 @@ export class TickerService {
     this.StartTicker();
   }
 
-  public GetNextTick() {
-    return this.nextTick;
+  public onTick(action: Function){
+    return this.tickEvent.subscribe(action);
   }
 
-  public GetTickEvent(): EventEmitter<TickEvent> {
-    return this.tickEvent;
-  }
-
-  public GetSecondsUntilNextTick(): number {
+  private GetSecondsUntilNextTick(): number {
     return (this.nextTick.getTime() - new Date().getTime()) / 1000;
   }
 
@@ -38,7 +34,7 @@ export class TickerService {
       return Math.floor(this.GetSecondsUntilNextTick());
     }));
     this.subscription = this.counter$.subscribe((timeUntil) => {
-      if (timeUntil === 0) {
+      if (timeUntil <= 0) {
         this.nextTick = this.GenerateNextTick();
         this.tickEvent.emit(new TickEvent(new Date(), this.nextTick));
       }

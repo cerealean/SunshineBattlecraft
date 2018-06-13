@@ -1,29 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { TickerService } from '../../services/ticker.service';
 import { TickEvent } from '../../models/tick-event';
+import { PlayerControllerService } from '../../services/player-controller.service';
 
 @Component({
   selector: 'user-currency-display',
   templateUrl: './user-currency-display.component.html',
   styleUrls: ['./user-currency-display.component.scss'],
-  providers: [TickerService]
+  providers: [TickerService, PlayerControllerService]
 })
 export class UserCurrencyDisplayComponent implements OnInit {
-  public gold: number;
-  public wood: number;
-  public metal: number;
-  private nextTick: Date;
-
-  constructor(private tickerService: TickerService) {
-    this.nextTick = this.tickerService.GetNextTick();
-    this.tickerService.GetTickEvent().subscribe((tickEvent: TickEvent) => {
-      this.nextTick = tickEvent.nextTick;
-    });
+  get nextTick(): Date {
+    return this.tickerService.nextTick;
   }
 
-  ngOnInit() {
-    this.gold = 0;
-    this.wood = 0;
-    this.metal = 0;
+  get gold(): number{
+    return this.playerControllerService.playerCurrency.gold;
   }
+
+  get wood(): number{
+    return this.playerControllerService.playerCurrency.wood;
+  }
+
+  get metal(): number{
+    return this.playerControllerService.playerCurrency.metal;
+  }
+
+  get food(): number{
+    return this.playerControllerService.playerCurrency.food;
+  }
+
+  constructor(
+    private tickerService: TickerService, 
+    private playerControllerService: PlayerControllerService) {}
+
+  ngOnInit() {}
 }
