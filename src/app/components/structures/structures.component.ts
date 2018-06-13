@@ -18,7 +18,13 @@ export class StructuresComponent implements OnInit {
   }
 
   toggleVisibility($event: MouseEvent) {
-    console.log($event.target);
+    const target = <HTMLElement>$event.target;
+    const contentElement = target.parentElement.parentElement.getElementsByClassName('card-content')[0];
+    if (contentElement.classList.contains('hidden')) {
+      contentElement.classList.remove('hidden');
+    } else {
+      contentElement.classList.add('hidden');
+    }
   }
 
 }
