@@ -6,14 +6,13 @@
           <h1 class="title">{{group.value[0].name}} ({{group.value.length}})</h1>
           <h2 class="subtitle">{{group.value[0].description}}</h2>
           <div class="card">
-            <div class="card-header" (click)="toggleVisibility($event)">
+            <div class="card-header cursor-pointer" (click)="toggleVisibility($event)">
               <span class="card-header-title">See More</span>
               <a class="card-header-icon" aria-label="more options">
                 <span class="icon">
                   <i class="fas fa-angle-down" aria-hidden="true"></i>
                 </span>
               </a>
-              <!-- <h2 class="subtitle">{{group.value[0].description}}</h2> -->
             </div>
             <div class="card-content hidden">
               <div class="notification" *ngFor="let structure of group.value">
