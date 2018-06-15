@@ -16,6 +16,7 @@
             </div>
             <div class="card-content hidden">
               <div class="notification" *ngFor="let structure of group.value">
+                <div class="delete" (click)="destroyStructure(structure)"></div>
                 {{structure.name}} created on {{structure.createdOn | date:'short'}}
               </div>
             </div>

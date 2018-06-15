@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Structure } from '../../structures/structure';
 import { PlayerControllerService } from '../../services/player-controller.service';
+import { OreMine } from '../../structures/ore-mine';
 
 @Component({
   selector: 'app-structures',
@@ -15,6 +16,10 @@ export class StructuresComponent implements OnInit {
 
   ngOnInit() {
     this.structures = this.playerControllerService.playerStructures;
+  }
+
+  destroyStructure(structure: Structure){
+    this.structures = this.structures.filter(x => x != structure);
   }
 
   toggleVisibility($event: MouseEvent) {
