@@ -13,22 +13,13 @@ import { TimeSpan } from '../timespan';
 })
 export class PlayerControllerService {
   public playerCurrency: PlayerCurrency = new PlayerCurrency();
-  private _playerStructures: Structure[];
-
-  get playerStructures(){
-    return this._playerStructures;
-  }
-
-  set playerStructures(value: Structure[]){
-    this._playerStructures = value;
-    this._playerStructures.sort(this.sortStructuresByName());
-  }
+  public playerStructures: Structure[];
 
   constructor(
     private tickerService: TickerService
   ) { 
     tickerService.onTick(() => {
-      this._playerStructures.forEach(structure => {
+      this.playerStructures.forEach(structure => {
         const tickAction = structure.OnTick();
         this.playerCurrency.addPlayerCurrency(tickAction.CurrencyChange);
       });

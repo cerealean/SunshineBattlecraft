@@ -5,6 +5,8 @@
         <div class="box">
           <h1 class="title">{{group.value[0].name}} ({{group.value.length}})</h1>
           <h2 class="subtitle">{{group.value[0].description}}</h2>
+          <h3 class="subtitle is-size-6">Cost: {{group.value[0].cost.food}}f, {{group.value[0].cost.wood}}w, {{group.value[0].cost.gold}}g, {{group.value[0].cost.metal}}m</h3>
+          <button (click)="purchaseStructure(group.value[0])">Buy</button>
           <div class="card">
             <div class="card-header cursor-pointer" (click)="toggleVisibility($event)">
               <span class="card-header-title">See More</span>

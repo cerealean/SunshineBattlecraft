@@ -18,10 +18,17 @@ export class StructuresComponent implements OnInit {
     this.structures = this.playerControllerService.playerStructures;
   }
 
+  purchaseStructure(structure: Structure){
+    var objectToCreate = Object.create(structure);
+    this.structures = this.structures.concat([objectToCreate]);
+    this.saveStructures();
+  }
+
   destroyStructure(structure: Structure){
     var isConfirmed = confirm(`Are you sure you want to destroy ${structure.name}?`);
     if(isConfirmed){
       this.structures = this.structures.filter(x => x != structure);
+      this.saveStructures();
     }
   }
 
@@ -33,6 +40,10 @@ export class StructuresComponent implements OnInit {
     } else {
       contentElement.classList.add('hidden');
     }
+  }
+
+  private saveStructures(){
+    this.playerControllerService.playerStructures = this.structures;
   }
 
 }
