@@ -1,8 +1,10 @@
 export class PlayerCurrency {
-    public gold: number = 0;
-    public wood: number = 0;
-    public metal: number = 0;
-    public food: number = 0;
+    constructor(
+        public gold = 0,
+        public wood = 0,
+        public metal = 0,
+        public food = 0
+    ){}
 
     public addPlayerCurrency(playerCurrency: PlayerCurrency){
         this.gold += playerCurrency.gold;

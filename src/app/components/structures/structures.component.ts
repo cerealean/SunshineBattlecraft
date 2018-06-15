@@ -19,7 +19,10 @@ export class StructuresComponent implements OnInit {
   }
 
   destroyStructure(structure: Structure){
-    this.structures = this.structures.filter(x => x != structure);
+    var isConfirmed = confirm(`Are you sure you want to destroy ${structure.name}?`);
+    if(isConfirmed){
+      this.structures = this.structures.filter(x => x != structure);
+    }
   }
 
   toggleVisibility($event: MouseEvent) {
