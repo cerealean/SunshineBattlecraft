@@ -6,7 +6,5 @@ export abstract class Structure {
 
     abstract OnTick(): TickAction;
 
-    constructor(public createdOn: Date){
-
-    }
+    constructor(public createdOn: Date){}
 }

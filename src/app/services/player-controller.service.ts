@@ -5,6 +5,8 @@ import { Farm } from '../structures/farm';
 import { TickerService } from './ticker.service';
 import { TreeMill } from '../structures/tree-mill';
 import { GoldMine } from '../structures/gold-mine';
+import { OreMine } from '../structures/ore-mine';
+import { TimeSpan } from '../timespan';
 
 @Injectable({
   providedIn: 'root'
@@ -34,9 +36,10 @@ export class PlayerControllerService {
 
     this.playerStructures = [
       new Farm(new Date()), 
-      new Farm(new Date(new Date().getTime() - 6000000000)), 
-      new TreeMill(new Date(new Date().getTime() - 60000)),
-      new GoldMine(new Date())
+      new Farm(TimeSpan.fromYears(2).toDateAddTimespan()), 
+      new TreeMill(TimeSpan.fromWeeks(20).toDateSubtractTimespan()),
+      new GoldMine(new Date()),
+      new OreMine(new Date())
     ];
   }
 
