@@ -1,25 +1,42 @@
 <section class="section">
   <div class="container is-fluid">
-    <div class="media" *ngFor="let group of structures | groupBy:'name'">
-      <div class="media-content">
-        <div class="box">
-          <h1 class="title">{{group.value[0].name}} ({{group.value.length}})</h1>
-          <h2 class="subtitle">{{group.value[0].description}}</h2>
-          <h3 class="subtitle is-size-6">Cost: {{group.value[0].cost.food}}f, {{group.value[0].cost.wood}}w, {{group.value[0].cost.gold}}g, {{group.value[0].cost.metal}}m</h3>
-          <button (click)="purchaseStructure(group.value[0])">Buy</button>
-          <div class="card">
-            <div class="card-header cursor-pointer" (click)="toggleVisibility($event)">
-              <span class="card-header-title">See More</span>
-              <a class="card-header-icon" aria-label="more options">
-                <span class="icon">
-                  <i class="fas fa-angle-down" aria-hidden="true"></i>
-                </span>
+    <div class="columns">
+      <div class="column is-one-fifth">
+        <aside class="menu">
+          <p class="menu-label">
+            Purchase
+          </p>
+          <ul class="menu-list">
+            <li *ngFor="let structure of structuresAvailableForPurchase | orderBy:'name'" (click)="purchaseStructure(structure)" title="{{structure.description}}">
+              <a>
+                {{structure.name}}<br />
+                <span class="subtitle is-size-7">Cost: {{structure.cost.food}}f, {{structure.cost.wood}}w, {{structure.cost.gold}}g, {{structure.cost.metal}}m</span>
               </a>
-            </div>
-            <div class="card-content hidden">
-              <div class="notification" *ngFor="let structure of group.value">
-                <div class="delete" (click)="destroyStructure(structure)"></div>
-                {{structure.name}} created on {{structure.createdOn | date:'short'}}
+            </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column">
+        <div class="media" *ngFor="let group of structures | groupBy:'name' | orderBy:'key'">
+          <div class="media-content">
+            <div class="box">
+              <h1 class="title">{{group.value[0].name}} ({{group.value.length}})</h1>
+              <h2 class="subtitle">{{group.value[0].description}}</h2>
+              <div class="card">
+                <div class="card-header cursor-pointer" (click)="toggleVisibility($event)">
+                  <span class="card-header-title">See More</span>
+                  <a class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                      <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                </div>
+                <div class="card-content hidden">
+                  <div class="notification" *ngFor="let structure of group.value">
+                    <button (click)="destroyStructure(structure)">Destroy</button>
+                    {{structure.name}} created on {{structure.createdOn | date:'short'}}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

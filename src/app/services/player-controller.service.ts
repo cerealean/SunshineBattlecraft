@@ -1,19 +1,31 @@
 import { Injectable } from '@angular/core';
 import { PlayerCurrency } from '../models/player-currency';
 import { Structure } from '../structures/structure';
-import { Farm } from '../structures/farm';
 import { TickerService } from './ticker.service';
-import { TreeMill } from '../structures/tree-mill';
+import { TownCenter } from '../structures/town-center';
 import { GoldMine } from '../structures/gold-mine';
+import { TreeMill } from '../structures/tree-mill';
 import { OreMine } from '../structures/ore-mine';
-import { TimeSpan } from '../timespan';
+import { Farm } from '../structures/farm';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerControllerService {
   public playerCurrency: PlayerCurrency = new PlayerCurrency();
-  public playerStructures: Structure[];
+  public playerStructures: Structure[] = [
+    new TownCenter(new Date()),
+    new GoldMine(new Date()),
+    new TreeMill(new Date()),
+    new OreMine(new Date()),
+    new Farm(new Date())
+  ];
+  public structuresAvailableForPurchase: Structure[] = [
+    new GoldMine(new Date()),
+    new TreeMill(new Date()),
+    new OreMine(new Date()),
+    new Farm(new Date())
+  ];
 
   constructor(
     private tickerService: TickerService
@@ -24,14 +36,6 @@ export class PlayerControllerService {
         this.playerCurrency.addPlayerCurrency(tickAction.CurrencyChange);
       });
     });
-
-    this.playerStructures = [
-      new Farm(new Date()), 
-      new Farm(TimeSpan.fromYears(2).toDateAddTimespan()), 
-      new TreeMill(TimeSpan.fromWeeks(20).toDateSubtractTimespan()),
-      new GoldMine(new Date()),
-      new OreMine(new Date())
-    ];
   }
 
   private sortStructuresByName(): (a: Structure, b: Structure) => number {

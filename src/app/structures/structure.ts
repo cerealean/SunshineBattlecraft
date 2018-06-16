@@ -20,4 +20,8 @@ export abstract class Structure {
                 && playerCurrency.metal >= this.cost.metal
                 && playerCurrency.wood >= this.cost.wood;
     }
+
+    public clone(){
+        return new (<any>this.constructor)(new Date());
+    }
 }

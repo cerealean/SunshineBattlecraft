@@ -12,4 +12,11 @@ export class PlayerCurrency {
         this.metal += playerCurrency.metal;
         this.food += playerCurrency.food;
     }
+
+    public subtractPlayerCurrency(playerCurrency: PlayerCurrency){
+        this.gold -= playerCurrency.gold;
+        this.wood -= playerCurrency.wood;
+        this.metal -= playerCurrency.metal;
+        this.food -= playerCurrency.food;
+    }
 }

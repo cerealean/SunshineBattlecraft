@@ -1,27 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { Structure } from '../../structures/structure';
 import { PlayerControllerService } from '../../services/player-controller.service';
-import { OreMine } from '../../structures/ore-mine';
 
 @Component({
   selector: 'app-structures',
   templateUrl: './structures.component.html',
-  styleUrls: ['./structures.component.scss'],
-  providers: [PlayerControllerService]
+  styleUrls: ['./structures.component.scss']
 })
 export class StructuresComponent implements OnInit {
-  private structures: Structure[] = [];
+  private structures: Structure[];
+  private structuresAvailableForPurchase: Structure[];
 
   constructor(private playerControllerService: PlayerControllerService) { }
 
   ngOnInit() {
     this.structures = this.playerControllerService.playerStructures;
+    this.structuresAvailableForPurchase = this.playerControllerService.structuresAvailableForPurchase;
   }
 
   purchaseStructure(structure: Structure){
-    var objectToCreate = Object.create(structure);
-    this.structures = this.structures.concat([objectToCreate]);
-    this.saveStructures();
+    if(structure.canBuy(this.playerControllerService.playerCurrency)){
+      this.playerControllerService.playerCurrency.subtractPlayerCurrency(structure.cost);
+      var objectToCreate = structure.clone();
+      this.structures = this.structures.concat([objectToCreate]);
+      this.saveStructures();
+      }
   }
 
   destroyStructure(structure: Structure){

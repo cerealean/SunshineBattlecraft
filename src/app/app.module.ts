@@ -8,6 +8,9 @@ import { UnitsComponent } from './components/units/units.component';
 import { UserCurrencyDisplayComponent } from './components/user-currency-display/user-currency-display.component';
 import { TimeUntilComponent } from './components/time-until/time-until.component';
 import { GroupByPipe } from './group-by.pipe';
+import { PlayerControllerService } from './services/player-controller.service';
+import { TickerService } from './services/ticker.service';
+import { OrderByPipe } from './order-by.pipe';
 
 @NgModule({
   declarations: [
@@ -16,13 +19,14 @@ import { GroupByPipe } from './group-by.pipe';
     UnitsComponent,
     UserCurrencyDisplayComponent,
     TimeUntilComponent,
-    GroupByPipe
+    GroupByPipe,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [PlayerControllerService, TickerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

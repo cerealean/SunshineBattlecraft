@@ -6,8 +6,7 @@ import { PlayerControllerService } from '../../services/player-controller.servic
 @Component({
   selector: 'user-currency-display',
   templateUrl: './user-currency-display.component.html',
-  styleUrls: ['./user-currency-display.component.scss'],
-  providers: [TickerService, PlayerControllerService]
+  styleUrls: ['./user-currency-display.component.scss']
 })
 export class UserCurrencyDisplayComponent implements OnInit {
   get nextTick(): Date {
