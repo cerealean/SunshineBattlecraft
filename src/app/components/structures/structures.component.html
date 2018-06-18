@@ -9,8 +9,15 @@
           <ul class="menu-list">
             <li *ngFor="let structure of structuresAvailableForPurchase | orderBy:'name'" (click)="purchaseStructure(structure)" title="{{structure.description}}">
               <a>
-                {{structure.name}}<br />
-                <span class="subtitle is-size-7">Cost: {{structure.cost.food}}f, {{structure.cost.wood}}w, {{structure.cost.gold}}g, {{structure.cost.metal}}m</span>
+                {{structure.name}}
+                <br />
+                <span class="subtitle is-size-7">
+                  Cost:
+                  <span [class.not-enough-resources]="playerControllerService.playerCurrency.food < structure.cost.food">{{structure.cost.food}}f</span>,
+                  <span [class.not-enough-resources]="playerControllerService.playerCurrency.wood < structure.cost.wood">{{structure.cost.wood}}w</span>, 
+                  <span [class.not-enough-resources]="playerControllerService.playerCurrency.gold < structure.cost.gold">{{structure.cost.gold}}g</span>, 
+                  <span [class.not-enough-resources]="playerControllerService.playerCurrency.metal < structure.cost.metal">{{structure.cost.metal}}m</span>
+                </span>
               </a>
             </li>
           </ul>

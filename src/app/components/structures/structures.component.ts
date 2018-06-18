@@ -18,18 +18,18 @@ export class StructuresComponent implements OnInit {
     this.structuresAvailableForPurchase = this.playerControllerService.structuresAvailableForPurchase;
   }
 
-  purchaseStructure(structure: Structure){
-    if(structure.canBuy(this.playerControllerService.playerCurrency)){
+  purchaseStructure(structure: Structure) {
+    if (structure.canBuy(this.playerControllerService.playerCurrency)) {
       this.playerControllerService.playerCurrency.subtractPlayerCurrency(structure.cost);
       var objectToCreate = structure.clone();
       this.structures = this.structures.concat([objectToCreate]);
       this.saveStructures();
-      }
+    }
   }
 
-  destroyStructure(structure: Structure){
+  destroyStructure(structure: Structure) {
     var isConfirmed = confirm(`Are you sure you want to destroy ${structure.name}?`);
-    if(isConfirmed){
+    if (isConfirmed) {
       this.structures = this.structures.filter(x => x != structure);
       this.saveStructures();
     }
@@ -45,7 +45,7 @@ export class StructuresComponent implements OnInit {
     }
   }
 
-  private saveStructures(){
+  private saveStructures() {
     this.playerControllerService.playerStructures = this.structures;
   }
 
