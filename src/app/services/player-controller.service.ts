@@ -29,7 +29,7 @@ export class PlayerControllerService {
 
   constructor(
     private tickerService: TickerService
-  ) { 
+  ) {
     tickerService.onTick(() => {
       this.playerStructures.forEach(structure => {
         const tickAction = structure.OnTick();
