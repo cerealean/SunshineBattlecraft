@@ -9,7 +9,6 @@ export class ResearchComponent implements OnInit {
 
   constructor(private playerControllerService: PlayerControllerService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }
