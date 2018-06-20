@@ -3,7 +3,7 @@ import { PlayerCurrency } from "../models/player-currency";
 
 export class TownCenter extends Structure{
     name = "Town Center"; 
-    description = "The center of your village";
+    description = "The center of your village. Also generates gold for your community.";
     cost = new PlayerCurrency(0,0,0,0);
 
     OnTick(){

@@ -7,7 +7,8 @@
             Purchase
           </p>
           <ul class="menu-list">
-            <li *ngFor="let structure of structuresAvailableForPurchase | orderBy:'name'" (click)="purchaseStructure(structure)" title="{{structure.description}}">
+            <li *ngFor="let structure of playerControllerService.structuresAvailableForPurchase | orderBy:'name'" (click)="purchaseStructure(structure)"
+              title="{{structure.description}}">
               <a>
                 {{structure.name}}
                 <br />
@@ -24,7 +25,7 @@
         </aside>
       </div>
       <div class="column">
-        <div class="media" *ngFor="let group of structures | groupBy:'name' | orderBy:'key'">
+        <div class="media" *ngFor="let group of playerControllerService.playerStructures | groupBy:'name' | orderBy:'key'">
           <div class="media-content">
             <div class="box">
               <h1 class="title">{{group.value[0].name}} ({{group.value.length}})</h1>

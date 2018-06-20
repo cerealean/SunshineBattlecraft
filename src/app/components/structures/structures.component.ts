@@ -8,30 +8,22 @@ import { PlayerControllerService } from '../../services/player-controller.servic
   styleUrls: ['./structures.component.scss']
 })
 export class StructuresComponent implements OnInit {
-  private structures: Structure[];
-  private structuresAvailableForPurchase: Structure[];
-
   constructor(private playerControllerService: PlayerControllerService) { }
 
-  ngOnInit() {
-    this.structures = this.playerControllerService.playerStructures;
-    this.structuresAvailableForPurchase = this.playerControllerService.structuresAvailableForPurchase;
-  }
+  ngOnInit() {}
 
   purchaseStructure(structure: Structure) {
     if (structure.canBuy(this.playerControllerService.playerCurrency)) {
       this.playerControllerService.playerCurrency.subtractPlayerCurrency(structure.cost);
       var objectToCreate = structure.clone();
-      this.structures = this.structures.concat([objectToCreate]);
-      this.saveStructures();
+      this.playerControllerService.playerStructures = this.playerControllerService.playerStructures.concat([objectToCreate]);
     }
   }
 
   destroyStructure(structure: Structure) {
     var isConfirmed = confirm(`Are you sure you want to destroy ${structure.name}?`);
     if (isConfirmed) {
-      this.structures = this.structures.filter(x => x != structure);
-      this.saveStructures();
+      this.playerControllerService.playerStructures = this.playerControllerService.playerStructures.filter(x => x != structure);
     }
   }
 
@@ -44,9 +36,4 @@ export class StructuresComponent implements OnInit {
       contentElement.classList.add('hidden');
     }
   }
-
-  private saveStructures() {
-    this.playerControllerService.playerStructures = this.structures;
-  }
-
 }
