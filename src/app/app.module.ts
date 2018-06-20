@@ -11,6 +11,7 @@ import { GroupByPipe } from './group-by.pipe';
 import { PlayerControllerService } from './services/player-controller.service';
 import { TickerService } from './services/ticker.service';
 import { OrderByPipe } from './order-by.pipe';
+import { ResearchComponent } from './components/research/research.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { OrderByPipe } from './order-by.pipe';
     UserCurrencyDisplayComponent,
     TimeUntilComponent,
     GroupByPipe,
-    OrderByPipe
+    OrderByPipe,
+    ResearchComponent
   ],
   imports: [
     BrowserModule,
