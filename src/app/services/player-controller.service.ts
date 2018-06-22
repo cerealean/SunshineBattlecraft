@@ -38,17 +38,19 @@ export class PlayerControllerService {
     });
   }
 
-  private sortStructuresByName(): (a: Structure, b: Structure) => number {
-    return (first: Structure, second: Structure) => {
-      if (first.name > second.name) {
-        return 1;
-      }
-      else if (first.name < second.name) {
-        return -1;
-      }
-      else {
-        return 0;
-      }
-    };
+  public exportPlayerData() {
+    return JSON.stringify({
+      'playerCurrency': this.playerCurrency,
+      'playerStructures': this.playerStructures,
+      'structuresAvailableForPurchase': this.structuresAvailableForPurchase
+    });
+  }
+
+  public importPlayerData(playerData: string) {
+    const deserializedData = JSON.parse(playerData);
+
+    this.playerCurrency = deserializedData.playerCurrency;
+    this.playerStructures = deserializedData.playerStructures;
+    this.structuresAvailableForPurchase = deserializedData.structuresAvailableForPurchase;
   }
 }
