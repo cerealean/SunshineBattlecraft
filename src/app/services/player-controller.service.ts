@@ -7,6 +7,8 @@ import { GoldMine } from '../structures/gold-mine';
 import { TreeMill } from '../structures/tree-mill';
 import { OreMine } from '../structures/ore-mine';
 import { Farm } from '../structures/farm';
+import { Notifier } from '../notifier';
+import { PlayerSettings } from '../models/player-settings';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +28,14 @@ export class PlayerControllerService {
     new OreMine(new Date()),
     new Farm(new Date())
   ];
+  public playerSettings: PlayerSettings = new PlayerSettings();
+  public notifier = new Notifier(this.playerSettings);
 
   constructor(
     private tickerService: TickerService
   ) {
     tickerService.onTick(() => {
+      this.notifier.notify('Hi!', 'This is a tick');
       this.playerStructures.forEach(structure => {
         const tickAction = structure.OnTick();
         this.playerCurrency.addPlayerCurrency(tickAction.CurrencyChange);

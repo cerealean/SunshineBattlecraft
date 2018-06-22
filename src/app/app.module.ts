@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StructuresComponent } from './components/structures/structures.component';
@@ -12,6 +12,7 @@ import { PlayerControllerService } from './services/player-controller.service';
 import { TickerService } from './services/ticker.service';
 import { OrderByPipe } from './order-by.pipe';
 import { ResearchComponent } from './components/research/research.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +23,13 @@ import { ResearchComponent } from './components/research/research.component';
     TimeUntilComponent,
     GroupByPipe,
     OrderByPipe,
-    ResearchComponent
+    ResearchComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [PlayerControllerService, TickerService],
   bootstrap: [AppComponent]
