@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerControllerService } from '../../services/player-controller.service';
+import { NotifierService } from '../../notifier.service';
 
 @Component({
   templateUrl: './settings.component.html',
@@ -7,17 +8,20 @@ import { PlayerControllerService } from '../../services/player-controller.servic
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private playerControllerService: PlayerControllerService) { }
+  constructor(
+    private playerControllerService: PlayerControllerService,
+    private notifierService: NotifierService
+  ) { }
 
   ngOnInit() {
   }
 
   public onNotificationPreferenceChange($event: MouseEvent) {
     if (this.playerControllerService.playerSettings.hasPermissionToNotify) {
-      this.playerControllerService.notifier.requestPermissionToNotify().then((canNotify: boolean) => {
+      this.notifierService.requestPermissionToNotify().then((canNotify: boolean) => {
         this.playerControllerService.playerSettings.hasPermissionToNotify = canNotify;
         if (canNotify) {
-          this.playerControllerService.notifier.notify('Notifications Enabled!', '');
+          this.notifierService.notify('Notifications Enabled!', '');
         }
       });
     }

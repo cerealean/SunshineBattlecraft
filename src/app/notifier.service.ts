@@ -1,7 +1,11 @@
 import { PlayerSettings } from './models/player-settings';
+import { Injectable } from '@angular/core';
 
-export class Notifier {
-  constructor(private playerSettings: PlayerSettings) {}
+@Injectable({
+  providedIn: 'root'
+})
+export class NotifierService {
+  private playerSettings: PlayerSettings = new PlayerSettings();
 
   public async requestPermissionToNotify(): Promise<boolean> {
     return new Promise<boolean>((resolve) => {

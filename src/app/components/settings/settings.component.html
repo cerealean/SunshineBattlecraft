@@ -1,7 +1,5 @@
 <div class="field">
-  <label for="canNotify">Use notifications?</label>
-  <input type="checkbox" id="canNotify" 
-  class="switch is-rounded" 
-  [(ngModel)]="playerControllerService.playerSettings.hasPermissionToNotify"
-  (change)="onNotificationPreferenceChange($event)" />
+  <input type="checkbox" id="canNotify" name="canNotify" class="switch" [(ngModel)]="playerControllerService.playerSettings.hasPermissionToNotify"
+    (change)="onNotificationPreferenceChange($event)" />
+    <label for="canNotify">Use notifications?</label>
 </div>

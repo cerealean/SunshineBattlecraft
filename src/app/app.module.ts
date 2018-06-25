@@ -13,6 +13,7 @@ import { TickerService } from './services/ticker.service';
 import { OrderByPipe } from './order-by.pipe';
 import { ResearchComponent } from './components/research/research.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { NotifierService } from './notifier.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [PlayerControllerService, TickerService],
+  providers: [PlayerControllerService, TickerService, NotifierService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
