@@ -8,6 +8,9 @@ import { TreeMill } from '../structures/tree-mill';
 import { OreMine } from '../structures/ore-mine';
 import { Farm } from '../structures/farm';
 import { NotifierService } from '../notifier.service';
+import { PlayerSettingsService } from '../player-settings.service';
+import { PlayerSettings } from '../models/player-settings';
+import { PlayerDataExport } from '../models/playerDataExport';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +33,8 @@ export class PlayerControllerService {
 
   constructor(
     private tickerService: TickerService,
-    private notifierService: NotifierService
+    private notifierService: NotifierService,
+    private playerSettingsService: PlayerSettingsService
   ) {
     tickerService.onTick(() => {
       this.notifierService.notify('Hi!', 'This is a tick');
@@ -42,18 +46,20 @@ export class PlayerControllerService {
   }
 
   public exportPlayerData() {
-    return JSON.stringify({
+    return JSON.stringify(<PlayerDataExport> {
       'playerCurrency': this.playerCurrency,
       'playerStructures': this.playerStructures,
-      'structuresAvailableForPurchase': this.structuresAvailableForPurchase
+      'structuresAvailableForPurchase': this.structuresAvailableForPurchase,
+      'playerSettings': this.playerSettingsService.export()
     });
   }
 
   public importPlayerData(playerData: string) {
-    const deserializedData = JSON.parse(playerData);
+    const deserializedData = <PlayerDataExport> JSON.parse(playerData);
 
     this.playerCurrency = deserializedData.playerCurrency;
     this.playerStructures = deserializedData.playerStructures;
     this.structuresAvailableForPurchase = deserializedData.structuresAvailableForPurchase;
+    this.playerSettingsService.import(deserializedData.playerSettings)
   }
 }

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlayerControllerService } from '../../services/player-controller.service';
 import { NotifierService } from '../../notifier.service';
-import { shouldCallLifecycleInitHook } from '@angular/core/src/view';
 import { PlayerSettingsService } from '../../player-settings.service';
 
 @Component({

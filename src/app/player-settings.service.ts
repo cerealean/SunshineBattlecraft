@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { PlayerSettings } from './models/player-settings';
-//import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +15,11 @@ export class PlayerSettingsService {
     this.playerSettingsModel.hasPermissionToNotify = value;
   }
 
-  //constructor(private storageService: StorageService) {}
+  public export(): PlayerSettings {
+    return this.playerSettingsModel;
+  }
+
+  public import(playerSettingsModel: PlayerSettings) {
+    this.playerSettingsModel = playerSettingsModel;
+  }
 }
