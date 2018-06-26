@@ -8,7 +8,6 @@ import { TreeMill } from '../structures/tree-mill';
 import { OreMine } from '../structures/ore-mine';
 import { Farm } from '../structures/farm';
 import { NotifierService } from '../notifier.service';
-import { PlayerSettings } from '../models/player-settings';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +27,6 @@ export class PlayerControllerService {
     new OreMine(new Date()),
     new Farm(new Date())
   ];
-  public playerSettings: PlayerSettings = new PlayerSettings();
 
   constructor(
     private tickerService: TickerService,

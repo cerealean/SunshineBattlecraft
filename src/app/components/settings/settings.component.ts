@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlayerControllerService } from '../../services/player-controller.service';
 import { NotifierService } from '../../notifier.service';
 import { shouldCallLifecycleInitHook } from '@angular/core/src/view';
+import { PlayerSettingsService } from '../../player-settings.service';
 
 @Component({
   templateUrl: './settings.component.html',
@@ -10,7 +11,7 @@ import { shouldCallLifecycleInitHook } from '@angular/core/src/view';
 export class SettingsComponent implements OnInit {
 
   constructor(
-    private playerControllerService: PlayerControllerService,
+    private playerSettingsService: PlayerSettingsService,
     private notifierService: NotifierService
   ) { }
 
@@ -18,9 +19,9 @@ export class SettingsComponent implements OnInit {
   }
 
   public onNotificationPreferenceChange($event: MouseEvent) {
-    if (this.playerControllerService.playerSettings.hasPermissionToNotify) {
+    if (this.playerSettingsService.notificationsEnabled) {
       this.notifierService.requestPermissionToNotify().then((canNotify: boolean) => {
-        this.playerControllerService.playerSettings.hasPermissionToNotify = canNotify;
+        this.playerSettingsService.notificationsEnabled = canNotify;
         if (canNotify) {
           this.notifierService.notify('Notifications Enabled!', '');
         }

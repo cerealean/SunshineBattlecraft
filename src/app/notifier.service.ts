@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { PlayerControllerService } from './services/player-controller.service';
+import { PlayerSettingsService } from './player-settings.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotifierService {
-  constructor(private playerControllerService: PlayerControllerService){}
+  constructor(private playerSettingsService: PlayerSettingsService){}
 
   public async requestPermissionToNotify(): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
@@ -16,7 +16,7 @@ export class NotifierService {
   }
 
   public notify(title: string, message: string) {
-    if (this.playerControllerService.playerSettings.hasPermissionToNotify === true) {
+    if (this.playerSettingsService.notificationsEnabled === true) {
       const notification = new Notification(title, { body: message });
       setTimeout(() => {
         notification.close();
