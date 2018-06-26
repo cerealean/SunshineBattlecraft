@@ -9,7 +9,6 @@ import { OreMine } from '../structures/ore-mine';
 import { Farm } from '../structures/farm';
 import { NotifierService } from '../notifier.service';
 import { PlayerSettingsService } from '../player-settings.service';
-import { PlayerSettings } from '../models/player-settings';
 import { PlayerDataExport } from '../models/playerDataExport';
 
 @Injectable({
@@ -60,6 +59,6 @@ export class PlayerControllerService {
     this.playerCurrency = deserializedData.playerCurrency;
     this.playerStructures = deserializedData.playerStructures;
     this.structuresAvailableForPurchase = deserializedData.structuresAvailableForPurchase;
-    this.playerSettingsService.import(deserializedData.playerSettings)
+    this.playerSettingsService.import(deserializedData.playerSettings);
   }
 }
