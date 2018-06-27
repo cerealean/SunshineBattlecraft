@@ -36,7 +36,7 @@ export class PlayerControllerService {
     private playerSettingsService: PlayerSettingsService
   ) {
     tickerService.onTick(() => {
-      this.notifierService.notify('Hi!', 'This is a tick');
+      this.notifierService.notify('Tick!', 'Time has moved forward in your world');
       this.playerStructures.forEach(structure => {
         const tickAction = structure.OnTick();
         this.playerCurrency.addPlayerCurrency(tickAction.CurrencyChange);

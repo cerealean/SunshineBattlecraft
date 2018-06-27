@@ -15,6 +15,14 @@ export class PlayerSettingsService {
     this.playerSettingsModel.hasPermissionToNotify = value;
   }
 
+  get autoSaveEnabled(): boolean{
+    return this.playerSettingsModel.autoSaveEnabled;
+  }
+
+  set autoSaveEnabled(value: boolean) {
+    this.playerSettingsModel.autoSaveEnabled = value;
+  }
+
   public export(): PlayerSettings {
     return this.playerSettingsModel;
   }
