@@ -15,7 +15,7 @@ export abstract class Structure {
     constructor(public createdOn: Date) {}
 
     OnTick(): TickAction {
-        if(this.isComplete) {
+        if (this.isComplete) {
             return {CurrencyChange: this.currencyChangeOnTick};
         } else {
             this.ticksTowardCompletion++;
