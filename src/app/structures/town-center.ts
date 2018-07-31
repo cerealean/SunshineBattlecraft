@@ -1,12 +1,10 @@
-import { Structure } from "./structure";
-import { PlayerCurrency } from "../models/player-currency";
+import { Structure } from './structure';
+import { PlayerCurrency } from '../models/player-currency';
 
-export class TownCenter extends Structure{
-    name = "Town Center"; 
-    description = "The center of your village. Also generates gold for your community.";
-    cost = new PlayerCurrency(0,0,0,0);
-
-    OnTick(){
-        return {CurrencyChange: new PlayerCurrency(10,0,0,0)};
-    }
+export class TownCenter extends Structure {
+    name = 'Town Center';
+    description = 'The center of your village. Also generates gold for your community.';
+    ticksToComplete = 0;
+    cost = new PlayerCurrency(0, 0, 0, 0);
+    currencyChangeOnTick = new PlayerCurrency(10, 0, 0, 0);
 }

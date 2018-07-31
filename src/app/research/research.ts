@@ -1,5 +1,5 @@
-import { PlayerCurrency } from "../models/player-currency";
-import { TickAction } from "../models/tick-action";
+import { PlayerCurrency } from '../models/player-currency';
+import { TickAction } from '../models/tick-action';
 
 export abstract class Research {
     abstract name: string;
@@ -17,7 +17,7 @@ export abstract class Research {
 
     public canBuy(playerCurrency: PlayerCurrency){
         if(!this.cost){
-            throw Error("cost must be defined for research!");
+            throw Error('cost must be defined for research!');
         }
 
         return playerCurrency.food >= this.cost.food

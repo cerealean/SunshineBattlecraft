@@ -5,14 +5,28 @@ export abstract class Structure {
     abstract name: string;
     abstract description: string;
     abstract cost: PlayerCurrency;
+    abstract ticksToComplete: number;
+    abstract currencyChangeOnTick: PlayerCurrency;
+    ticksTowardCompletion = 0;
+    get isComplete(): boolean {
+        return this.ticksTowardCompletion >= this.ticksToComplete;
+    }
 
-    constructor(public createdOn: Date){}
+    constructor(public createdOn: Date) {}
 
-    abstract OnTick(): TickAction;
+    OnTick(): TickAction {
+        if(this.isComplete) {
+            return {CurrencyChange: this.currencyChangeOnTick};
+        } else {
+            this.ticksTowardCompletion++;
+        }
 
-    public canBuy(playerCurrency: PlayerCurrency){
-        if(!this.cost){
-            throw Error("cost must be defined for structure!");
+        return new TickAction();
+    }
+
+    public canBuy(playerCurrency: PlayerCurrency) {
+        if (!this.cost) {
+            throw Error('cost must be defined for structure!');
         }
 
         return playerCurrency.food >= this.cost.food
@@ -21,7 +35,7 @@ export abstract class Structure {
                 && playerCurrency.wood >= this.cost.wood;
     }
 
-    public clone(){
+    public clone() {
         return new (<any>this.constructor)(new Date());
     }
 }

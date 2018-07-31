@@ -8,7 +8,7 @@
           </p>
           <ul class="menu-list">
             <li *ngFor="let structure of playerControllerService.structuresAvailableForPurchase | orderBy:'name'" (click)="purchaseStructure(structure)"
-              title="{{structure.description}}">
+              title="{{structure.description}}. Ticks to complete: {{structure.ticksToComplete}}">
               <a>
                 {{structure.name}}
                 <br />
@@ -42,7 +42,8 @@
                 <div class="card-content hidden">
                   <div class="notification" *ngFor="let structure of group.value">
                     <button (click)="destroyStructure(structure)">Destroy</button>
-                    {{structure.name}} created on {{structure.createdOn | date:'short'}}
+                    {{structure.name}} created on {{structure.createdOn | date:'short'}} &nbsp;
+                    <span *ngIf="structure.ticksTowardCompletion < structure.ticksToComplete" class="green is-italic">(in progress: {{structure.ticksTowardCompletion}}/{{structure.ticksToComplete}} ticks)</span>
                   </div>
                 </div>
               </div>
