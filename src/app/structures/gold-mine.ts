@@ -7,8 +7,4 @@ export class GoldMine extends Structure {
     public cost = new PlayerCurrency(200);
     public currencyChangeOnTick = new PlayerCurrency(10);
     public ticksToComplete = 10;
-
-    constructor(createdOn: Date) {
-        super(createdOn);
-    }
 }

@@ -7,12 +7,11 @@ export abstract class Structure {
     abstract cost: PlayerCurrency;
     abstract ticksToComplete: number;
     abstract currencyChangeOnTick: PlayerCurrency;
-    ticksTowardCompletion = 0;
     get isComplete(): boolean {
         return this.ticksTowardCompletion >= this.ticksToComplete;
     }
 
-    constructor(public createdOn: Date) {}
+    constructor(public createdOn: Date, public ticksTowardCompletion = 0) {}
 
     OnTick(): TickAction {
         if (this.isComplete) {

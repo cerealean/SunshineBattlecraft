@@ -7,8 +7,4 @@ export class TreeMill extends Structure {
     public cost = new PlayerCurrency(180);
     public currencyChangeOnTick = new PlayerCurrency(0, 10);
     public ticksToComplete = 10;
-
-    constructor(createdOn: Date) {
-        super(createdOn);
-    }
 }

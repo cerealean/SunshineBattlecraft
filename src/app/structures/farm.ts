@@ -7,8 +7,4 @@ export class Farm extends Structure {
     public cost = new PlayerCurrency(175);
     public currencyChangeOnTick = new PlayerCurrency(0, 0, 0, 10);
     public ticksToComplete = 10;
-
-    constructor(createdOn: Date) {
-        super(createdOn);
-    }
 }

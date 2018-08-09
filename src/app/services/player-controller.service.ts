@@ -17,11 +17,11 @@ import { PlayerDataExport } from '../models/playerDataExport';
 export class PlayerControllerService {
   public playerCurrency: PlayerCurrency = new PlayerCurrency();
   public playerStructures: Structure[] = [
-    new TownCenter(new Date()),
-    new GoldMine(new Date()),
-    new TreeMill(new Date()),
-    new OreMine(new Date()),
-    new Farm(new Date())
+    new TownCenter(new Date(), Number.MAX_SAFE_INTEGER),
+    new GoldMine(new Date(), Number.MAX_SAFE_INTEGER),
+    new TreeMill(new Date(), Number.MAX_SAFE_INTEGER),
+    new OreMine(new Date(), Number.MAX_SAFE_INTEGER),
+    new Farm(new Date(), Number.MAX_SAFE_INTEGER)
   ];
   public structuresAvailableForPurchase: Structure[] = [
     new GoldMine(new Date()),

@@ -7,8 +7,4 @@ export class OreMine extends Structure {
     public cost = new PlayerCurrency(220);
     public currencyChangeOnTick = new PlayerCurrency(0, 0, 10, 0);
     public ticksToComplete = 10;
-
-    constructor(createdOn: Date) {
-        super(createdOn);
-    }
 }
