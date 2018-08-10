@@ -11,7 +11,22 @@ export abstract class Structure {
         return this.ticksTowardCompletion >= this.ticksToComplete;
     }
 
-    constructor(public createdOn: Date, public ticksTowardCompletion = 0) {}
+    constructor(public createdOn: Date = new Date(), public ticksTowardCompletion = 0) {}
+
+    public static import(structureData: Structure) {
+        const newStructure = new (<any> new Structure().constructor)(structureData.createdOn, structureData.ticksTowardCompletion);
+        newStructure.currencyChangeOnTick = PlayerCurrency.import(structureData.currencyChangeOnTick);
+        newStructure.cost = PlayerCurrency.import(structureData.cost);
+        newStructure.description = structureData.description;
+        newStructure.name = structureData.name;
+        newStructure.ticksToComplete = structureData.ticksToComplete;
+
+        return newStructure;
+    }
+
+    public static importMany(structuresToImport: Structure[]) {
+        return structuresToImport.map(x => this.import(x));
+    }
 
     OnTick(): TickAction {
         if (this.isComplete) {
