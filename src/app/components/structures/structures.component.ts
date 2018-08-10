@@ -14,15 +14,15 @@ export class StructuresComponent implements OnInit {
   purchaseStructure(structure: Structure) {
     if (structure.canBuy(this.playerControllerService.playerCurrency)) {
       this.playerControllerService.playerCurrency.subtractPlayerCurrency(structure.cost);
-      var objectToCreate = structure.clone();
+      const objectToCreate = structure.clone();
       this.playerControllerService.playerStructures = this.playerControllerService.playerStructures.concat([objectToCreate]);
     }
   }
 
   destroyStructure(structure: Structure) {
-    var isConfirmed = confirm(`Are you sure you want to destroy ${structure.name}?`);
+    const isConfirmed = confirm(`Are you sure you want to destroy ${structure.name}?`);
     if (isConfirmed) {
-      this.playerControllerService.playerStructures = this.playerControllerService.playerStructures.filter(x => x != structure);
+      this.playerControllerService.playerStructures = this.playerControllerService.playerStructures.filter(x => x !== structure);
     }
   }
 

@@ -14,6 +14,7 @@ export abstract class Structure {
     constructor(public createdOn: Date = new Date(), public ticksTowardCompletion = 0) {}
 
     public static import(structureData: Structure) {
+        // @ts-ignore Need to create a new structure, even though it's an abstract class, for the sake of cloning
         const newStructure = new (<any> new Structure().constructor)(structureData.createdOn, structureData.ticksTowardCompletion);
         newStructure.currencyChangeOnTick = PlayerCurrency.import(structureData.currencyChangeOnTick);
         newStructure.cost = PlayerCurrency.import(structureData.cost);

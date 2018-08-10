@@ -15,6 +15,8 @@ import { ResearchComponent } from './components/research/research.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { NotifierService } from './notifier.service';
 import { StorageService } from './storage.service';
+import { CallbackComponent } from './components/callback/callback.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { StorageService } from './storage.service';
     GroupByPipe,
     OrderByPipe,
     ResearchComponent,
-    SettingsComponent
+    SettingsComponent,
+    CallbackComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
