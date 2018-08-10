@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TickerService } from '../../services/ticker.service';
 import { TickEvent } from '../../models/tick-event';
 import { PlayerControllerService } from '../../services/player-controller.service';
+import { AuthenticationService } from '../../authentication.service';
 
 @Component({
   selector: 'user-currency-display',
@@ -29,9 +30,15 @@ export class UserCurrencyDisplayComponent implements OnInit {
     return this.playerControllerService.playerCurrency.food;
   }
 
+  get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated;
+  }
+
   constructor(
     private tickerService: TickerService, 
-    private playerControllerService: PlayerControllerService) {}
+    private playerControllerService: PlayerControllerService,
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit() {}
 }

@@ -11,6 +11,7 @@ import { NotifierService } from '../notifier.service';
 import { PlayerSettingsService } from '../player-settings.service';
 import { PlayerDataExport } from '../models/playerDataExport';
 import { StorageService } from '../storage.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +25,14 @@ export class PlayerControllerService {
     private tickerService: TickerService,
     private notifierService: NotifierService,
     private playerSettingsService: PlayerSettingsService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private authService: AuthenticationService
   ) {
     const currentSavedGame = this.storageService.getItem('SunshineBattlecraft');
-    if (currentSavedGame) {
+    const isAuthenticated = this.authService.isAuthenticated;
+    if (currentSavedGame && isAuthenticated) {
       this.importPlayerData(currentSavedGame);
-    } else {
+    } else if (isAuthenticated) {
       this.playerStructures = [
         new TownCenter(new Date(), Number.MAX_SAFE_INTEGER),
         new GoldMine(new Date(), Number.MAX_SAFE_INTEGER),
@@ -50,17 +53,19 @@ export class PlayerControllerService {
 
   private setupTickActions() {
     this.tickerService.onTick(() => {
-      this.notifierService.notify('Tick!', 'Time has moved forward in your world');
-      this.playerStructures.forEach(structure => {
-        const tickAction = structure.OnTick();
-        this.playerCurrency.addPlayerCurrency(tickAction.CurrencyChange);
-        this.storageService.saveItem('SunshineBattlecraft', this.exportPlayerData());
-      });
+      if (this.authService.isAuthenticated) {
+        this.notifierService.notify('Tick!', 'Time has moved forward in your world');
+        this.playerStructures.forEach(structure => {
+          const tickAction = structure.OnTick();
+          this.playerCurrency.addPlayerCurrency(tickAction.CurrencyChange);
+          this.storageService.saveItem('SunshineBattlecraft', this.exportPlayerData());
+        });
+      }
     });
   }
 
   public exportPlayerData() {
-    const exportedData = JSON.stringify(<PlayerDataExport> {
+    const exportedData = JSON.stringify(<PlayerDataExport>{
       'playerCurrency': this.playerCurrency,
       'playerStructures': this.playerStructures,
       'structuresAvailableForPurchase': this.structuresAvailableForPurchase,
@@ -71,7 +76,7 @@ export class PlayerControllerService {
   }
 
   public importPlayerData(playerData: string) {
-    const deserializedData = <PlayerDataExport> JSON.parse(playerData);
+    const deserializedData = <PlayerDataExport>JSON.parse(playerData);
 
     this.playerCurrency = PlayerCurrency.import(deserializedData.playerCurrency);
     this.playerStructures = Structure.importMany(deserializedData.playerStructures);
