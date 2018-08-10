@@ -13,7 +13,11 @@ export class AppComponent {
     return this.authService.isAuthenticated;
   }
 
-  constructor(private authService: AuthenticationService){}
+  constructor(private authService: AuthenticationService) {
+    if (this.authService.isAuthenticated) {
+      this.authService.scheduleRenewal();
+    }
+  }
 
   public login() {
     this.authService.login();

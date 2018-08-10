@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
+import { of, timer } from '../../node_modules/rxjs';
+import { mergeMap } from '../../node_modules/rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class AuthenticationService {
     scope: 'openid'
   });
   private userProfile: any;
+  private refreshSub: any;
 
   get isAuthenticated(): boolean {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
@@ -40,12 +43,20 @@ export class AuthenticationService {
     });
   }
 
-  private setSession(authResult): void {
-    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', expiresAt);
-    localStorage.setItem('scope', authResult.scope || '');
+  public userHasScopes(scopes: Array<string>): boolean {
+    const grantedScopes = JSON.parse(localStorage.getItem('scopes')).split(' ');
+    return scopes.every(scope => grantedScopes.includes(scope));
+  }
+
+  public renewToken() {
+    this.auth0.checkSession({}, (err, result) => {
+      if (err) {
+        console.log(err);
+        this.router.navigate(['/']);
+      } else {
+        this.setSession(result);
+      }
+    });
   }
 
   public logout(): void {
@@ -53,6 +64,7 @@ export class AuthenticationService {
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
     localStorage.removeItem('scope');
+    this.unscheduleRenewal();
     this.router.navigate(['/']);
   }
 
@@ -75,5 +87,43 @@ export class AuthenticationService {
         });
       }
     });
+  }
+
+  public scheduleRenewal() {
+    if (!this.isAuthenticated) { return; }
+    this.unscheduleRenewal();
+    const expiresAt = JSON.parse(window.localStorage.getItem('expires_at'));
+    const expiresIn$ = of(expiresAt).pipe(
+      mergeMap(
+        expiresAt => {
+          return timer(Math.max(1, expiresAt - Date.now()));
+        }
+      )
+    );
+
+    // Once the delay time from above is
+    // reached, get a new JWT and schedule
+    // additional refreshes
+    this.refreshSub = expiresIn$.subscribe(
+      () => {
+        this.renewToken();
+        this.scheduleRenewal();
+      }
+    );
+  }
+
+  public unscheduleRenewal() {
+    if (this.refreshSub) {
+      this.refreshSub.unsubscribe();
+    }
+  }
+
+  private setSession(authResult): void {
+    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('expires_at', expiresAt);
+    localStorage.setItem('scope', authResult.scope || '');
+    this.scheduleRenewal();
   }
 }
