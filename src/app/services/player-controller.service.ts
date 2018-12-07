@@ -80,8 +80,8 @@ export class PlayerControllerService {
 
     if (deserializedData) {
       this.playerCurrency = PlayerCurrency.import(deserializedData.playerCurrency);
-      this.playerStructures = Structure.importMany(deserializedData.playerStructures);
-      this.structuresAvailableForPurchase = Structure.importMany(deserializedData.structuresAvailableForPurchase);
+      // this.playerStructures = Structure.importMany(deserializedData.playerStructures);
+      // this.structuresAvailableForPurchase = Structure.importMany(deserializedData.structuresAvailableForPurchase);
       this.playerSettingsService.import(deserializedData.playerSettings);
     }
   }

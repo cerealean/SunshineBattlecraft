@@ -13,30 +13,7 @@ export abstract class Structure {
 
     constructor(public createdOn: Date = new Date(), public ticksTowardCompletion = 0) { }
 
-    public static import(structureData: Structure) {
-        const newStructure = new (/*uggghhhh*/)(Structure, structureData.createdOn, structureData.ticksTowardCompletion);
-        newStructure.currencyChangeOnTick = PlayerCurrency.import(structureData.currencyChangeOnTick);
-        newStructure.cost = PlayerCurrency.import(structureData.cost);
-        newStructure.description = structureData.description;
-        newStructure.name = structureData.name;
-        newStructure.ticksToComplete = structureData.ticksToComplete;
-        if (!newStructure.OnTick) {
-            newStructure.OnTick = Structure.prototype.OnTick;
-        }
-        if (!newStructure.canBuy) {
-            newStructure.canBuy = Structure.prototype.canBuy;
-        }
-        if (!newStructure.clone) {
-            newStructure.clone = Structure.prototype.clone;
-        }
-        console.log(newStructure);
-
-        return newStructure;
-    }
-
-    public static importMany(structuresToImport: Structure[]) {
-        return structuresToImport.map(x => this.import(x));
-    }
+    public abstract import(structureData: Structure): Structure;
 
     public OnTick(): TickAction {
         if (this.isComplete) {
@@ -48,7 +25,7 @@ export abstract class Structure {
         return new TickAction();
     }
 
-    public getType(){
+    public getType() {
         return (<any>this.constructor);
     }
 
