@@ -36,7 +36,6 @@ export abstract class Structure {
     }
 
     public static importMany(structureData: Structure[]): Structure[] {
-        console.log(structureData);
         return structureData.map(x => Structure.import(x));
     }
 

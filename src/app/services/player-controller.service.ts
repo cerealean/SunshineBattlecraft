@@ -73,7 +73,6 @@ export class PlayerControllerService {
 
   public importPlayerData(playerData: string) {
     const deserializedData = <PlayerDataExport>JSON.parse(playerData);
-    console.log(deserializedData);
 
     if (deserializedData) {
       this.playerCurrency = PlayerCurrency.import(deserializedData.playerCurrency);
@@ -91,10 +90,6 @@ export class PlayerControllerService {
           const tickAction = structure.OnTick();
           this.playerCurrency.addPlayerCurrency(tickAction.CurrencyChange);
           const exportedData = this.exportPlayerData();
-          console.groupCollapsed('Saving');
-          console.log('Player structures', this.playerStructures);
-          console.log('Saving exported data', exportedData);
-          console.groupEnd();
           this.storageService.saveItem('SunshineBattlecraft', exportedData);
         });
       }
