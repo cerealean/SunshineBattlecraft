@@ -7,21 +7,46 @@ export abstract class Structure {
     abstract cost: PlayerCurrency;
     abstract ticksToComplete: number;
     abstract currencyChangeOnTick: PlayerCurrency;
-    get isComplete(): boolean {
-        return this.ticksTowardCompletion >= this.ticksToComplete;
-    }
 
     constructor(public createdOn: Date = new Date(), public ticksTowardCompletion = 0) { }
 
-    public abstract import(structureData: Structure): Structure;
+    public static import(structureData: Structure): Structure {
+        const newStructure = <Structure>{};
+        newStructure.createdOn = structureData.createdOn;
+        newStructure.ticksTowardCompletion = structureData.ticksTowardCompletion;
+        newStructure.currencyChangeOnTick = PlayerCurrency.import(structureData.currencyChangeOnTick);
+        newStructure.cost = PlayerCurrency.import(structureData.cost);
+        newStructure.description = structureData.description;
+        newStructure.name = structureData.name;
+        newStructure.ticksToComplete = structureData.ticksToComplete;
+        if (!newStructure.OnTick) {
+            newStructure.OnTick = Structure.prototype.OnTick;
+        }
+        if (!newStructure.canBuy) {
+            newStructure.canBuy = Structure.prototype.canBuy;
+        }
+        if (!newStructure.clone) {
+            newStructure.clone = Structure.prototype.clone;
+        }
+        if (!newStructure.isComplete) {
+            newStructure.isComplete = Structure.prototype.isComplete;
+        }
+
+        return newStructure;
+    }
+
+    public static importMany(structureData: Structure[]): Structure[] {
+        console.log(structureData);
+        return structureData.map(x => Structure.import(x));
+    }
+
 
     public OnTick(): TickAction {
-        if (this.isComplete) {
+        if (this.isComplete()) {
             return { CurrencyChange: this.currencyChangeOnTick };
         } else {
             this.ticksTowardCompletion++;
         }
-
         return new TickAction();
     }
 
@@ -42,5 +67,9 @@ export abstract class Structure {
 
     public clone() {
         return new (<any>this.constructor)(new Date());
+    }
+
+    public isComplete(): boolean {
+        return this.ticksTowardCompletion >= this.ticksToComplete;
     }
 }

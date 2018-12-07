@@ -11,7 +11,7 @@ export class PlayerCurrency {
     }
 
     public static importMany(currency: PlayerCurrency[]) {
-        return currency.map(x => this.import(x));
+        return currency.map(x => PlayerCurrency.import(x));
     }
 
     public addPlayerCurrency(playerCurrency: PlayerCurrency) {

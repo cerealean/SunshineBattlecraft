@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
+import { PlayerControllerService } from './services/player-controller.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent {
     return this.authService.isAuthenticated;
   }
 
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService, private playerControllerService: PlayerControllerService) {
     if (this.authService.isAuthenticated) {
       this.authService.scheduleRenewal();
     }
@@ -21,5 +22,9 @@ export class AppComponent {
 
   public login() {
     this.authService.login();
+  }
+
+  public killDataAndRestart() {
+    this.playerControllerService.setupNewGame();
   }
 }

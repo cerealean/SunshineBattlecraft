@@ -31,37 +31,33 @@ export class PlayerControllerService {
     const currentSavedGame = this.storageService.getItem('SunshineBattlecraft');
     const isAuthenticated = this.authService.isAuthenticated;
     if (currentSavedGame && isAuthenticated) {
-      this.importPlayerData(currentSavedGame);
+      try {
+        this.importPlayerData(currentSavedGame);
+      } catch (error) {
+        console.error('Error importing data. Resetting.', error);
+        this.setupNewGame();
+      }
     } else if (isAuthenticated) {
-      this.playerStructures = [
-        new TownCenter(new Date(), Number.MAX_SAFE_INTEGER),
-        new GoldMine(new Date(), Number.MAX_SAFE_INTEGER),
-        new TreeMill(new Date(), Number.MAX_SAFE_INTEGER),
-        new OreMine(new Date(), Number.MAX_SAFE_INTEGER),
-        new Farm(new Date(), Number.MAX_SAFE_INTEGER)
-      ];
-
-      this.structuresAvailableForPurchase = [
-        new GoldMine(new Date()),
-        new TreeMill(new Date()),
-        new OreMine(new Date()),
-        new Farm(new Date())
-      ];
+      this.setupNewGame();
     }
     this.setupTickActions();
   }
 
-  private setupTickActions() {
-    this.tickerService.onTick(() => {
-      if (this.authService.isAuthenticated) {
-        this.notifierService.notify('Tick!', 'Time has moved forward in your world');
-        this.playerStructures.forEach(structure => {
-          const tickAction = structure.OnTick();
-          this.playerCurrency.addPlayerCurrency(tickAction.CurrencyChange);
-          this.storageService.saveItem('SunshineBattlecraft', this.exportPlayerData());
-        });
-      }
-    });
+  public setupNewGame() {
+    this.playerCurrency = new PlayerCurrency();
+    this.playerStructures = [
+      new TownCenter(new Date(), Number.MAX_SAFE_INTEGER),
+      new GoldMine(new Date(), Number.MAX_SAFE_INTEGER),
+      new TreeMill(new Date(), Number.MAX_SAFE_INTEGER),
+      new OreMine(new Date(), Number.MAX_SAFE_INTEGER),
+      new Farm(new Date(), Number.MAX_SAFE_INTEGER)
+    ];
+    this.structuresAvailableForPurchase = [
+      new GoldMine(new Date()),
+      new TreeMill(new Date()),
+      new OreMine(new Date()),
+      new Farm(new Date())
+    ];
   }
 
   public exportPlayerData() {
@@ -77,12 +73,31 @@ export class PlayerControllerService {
 
   public importPlayerData(playerData: string) {
     const deserializedData = <PlayerDataExport>JSON.parse(playerData);
+    console.log(deserializedData);
 
     if (deserializedData) {
       this.playerCurrency = PlayerCurrency.import(deserializedData.playerCurrency);
-      // this.playerStructures = Structure.importMany(deserializedData.playerStructures);
-      // this.structuresAvailableForPurchase = Structure.importMany(deserializedData.structuresAvailableForPurchase);
+      this.playerStructures = Structure.importMany(deserializedData.playerStructures);
+      this.structuresAvailableForPurchase = Structure.importMany(deserializedData.structuresAvailableForPurchase);
       this.playerSettingsService.import(deserializedData.playerSettings);
     }
+  }
+
+  private setupTickActions() {
+    this.tickerService.onTick(() => {
+      if (this.authService.isAuthenticated) {
+        this.notifierService.notify('Tick!', 'Time has moved forward in your world');
+        this.playerStructures.forEach(structure => {
+          const tickAction = structure.OnTick();
+          this.playerCurrency.addPlayerCurrency(tickAction.CurrencyChange);
+          const exportedData = this.exportPlayerData();
+          console.groupCollapsed('Saving');
+          console.log('Player structures', this.playerStructures);
+          console.log('Saving exported data', exportedData);
+          console.groupEnd();
+          this.storageService.saveItem('SunshineBattlecraft', exportedData);
+        });
+      }
+    });
   }
 }
