@@ -7,7 +7,7 @@ export class PlayerCurrency {
     ) {}
 
     public static import(currency: PlayerCurrency) {
-        return new PlayerCurrency(currency.gold, currency.wood, currency.metal, currency.food);
+        return currency ? new PlayerCurrency(currency.gold, currency.wood, currency.metal, currency.food) : new PlayerCurrency();
     }
 
     public static importMany(currency: PlayerCurrency[]) {

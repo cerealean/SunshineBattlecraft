@@ -12,7 +12,7 @@ export class StructuresComponent implements OnInit {
   ngOnInit() {}
 
   purchaseStructure(structure: Structure) {
-    if (structure.canBuy(this.playerControllerService.playerCurrency)) {
+    if (true || structure.canBuy(this.playerControllerService.playerCurrency)) {
       this.playerControllerService.playerCurrency.subtractPlayerCurrency(structure.cost);
       const objectToCreate = structure.clone();
       this.playerControllerService.playerStructures = this.playerControllerService.playerStructures.concat([objectToCreate]);

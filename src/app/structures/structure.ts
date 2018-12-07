@@ -11,16 +11,25 @@ export abstract class Structure {
         return this.ticksTowardCompletion >= this.ticksToComplete;
     }
 
-    constructor(public createdOn: Date = new Date(), public ticksTowardCompletion = 0) {}
+    constructor(public createdOn: Date = new Date(), public ticksTowardCompletion = 0) { }
 
     public static import(structureData: Structure) {
-        // @ts-ignore Need to create a new structure, even though it's an abstract class, for the sake of cloning
-        const newStructure = new (<any> new Structure().constructor)(structureData.createdOn, structureData.ticksTowardCompletion);
+        const newStructure = new (/*uggghhhh*/)(Structure, structureData.createdOn, structureData.ticksTowardCompletion);
         newStructure.currencyChangeOnTick = PlayerCurrency.import(structureData.currencyChangeOnTick);
         newStructure.cost = PlayerCurrency.import(structureData.cost);
         newStructure.description = structureData.description;
         newStructure.name = structureData.name;
         newStructure.ticksToComplete = structureData.ticksToComplete;
+        if (!newStructure.OnTick) {
+            newStructure.OnTick = Structure.prototype.OnTick;
+        }
+        if (!newStructure.canBuy) {
+            newStructure.canBuy = Structure.prototype.canBuy;
+        }
+        if (!newStructure.clone) {
+            newStructure.clone = Structure.prototype.clone;
+        }
+        console.log(newStructure);
 
         return newStructure;
     }
@@ -29,14 +38,18 @@ export abstract class Structure {
         return structuresToImport.map(x => this.import(x));
     }
 
-    OnTick(): TickAction {
+    public OnTick(): TickAction {
         if (this.isComplete) {
-            return {CurrencyChange: this.currencyChangeOnTick};
+            return { CurrencyChange: this.currencyChangeOnTick };
         } else {
             this.ticksTowardCompletion++;
         }
 
         return new TickAction();
+    }
+
+    public getType(){
+        return (<any>this.constructor);
     }
 
     public canBuy(playerCurrency: PlayerCurrency) {
@@ -45,9 +58,9 @@ export abstract class Structure {
         }
 
         return playerCurrency.food >= this.cost.food
-                && playerCurrency.gold >= this.cost.gold
-                && playerCurrency.metal >= this.cost.metal
-                && playerCurrency.wood >= this.cost.wood;
+            && playerCurrency.gold >= this.cost.gold
+            && playerCurrency.metal >= this.cost.metal
+            && playerCurrency.wood >= this.cost.wood;
     }
 
     public clone() {

@@ -78,9 +78,11 @@ export class PlayerControllerService {
   public importPlayerData(playerData: string) {
     const deserializedData = <PlayerDataExport>JSON.parse(playerData);
 
-    this.playerCurrency = PlayerCurrency.import(deserializedData.playerCurrency);
-    this.playerStructures = Structure.importMany(deserializedData.playerStructures);
-    this.structuresAvailableForPurchase = Structure.importMany(deserializedData.structuresAvailableForPurchase);
-    this.playerSettingsService.import(deserializedData.playerSettings);
+    if (deserializedData) {
+      this.playerCurrency = PlayerCurrency.import(deserializedData.playerCurrency);
+      this.playerStructures = Structure.importMany(deserializedData.playerStructures);
+      this.structuresAvailableForPurchase = Structure.importMany(deserializedData.structuresAvailableForPurchase);
+      this.playerSettingsService.import(deserializedData.playerSettings);
+    }
   }
 }
