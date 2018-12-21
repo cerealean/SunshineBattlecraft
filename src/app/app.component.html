@@ -1,45 +1,49 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" routerLink="/">
-      <img src="../assets/images/gadu.png" alt="Sunshine Battlecraft" width="112" height="28">
-    </a>
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" routerLink="/">
+        <img src="../assets/images/gadu.png" alt="Sunshine Battlecraft" width="112" height="28">
+      </a>
 
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/structures">
-        Structures
-      </a>
-      <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/research">
-        Research
-      </a>
-      <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/units">
-        Units
-      </a>
-      <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/settings">
-        Settings
-      </a>
-      <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/logout">
-        Logout
-      </a>
-      <a class="navbar-item is-warning" *ngIf="isAuthenticated" (click)="killDataAndRestart()">
-        Reset
-      </a>
-      <a class="navbar-item" *ngIf="!isAuthenticated" (click)="login()">
-        Login
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
       </a>
     </div>
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <user-currency-display></user-currency-display>
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/structures">
+          Structures
+        </a>
+        <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/research">
+          Research
+        </a>
+        <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/units">
+          Units
+        </a>
+        <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/settings">
+          Settings
+        </a>
+        <a class="navbar-item" *ngIf="isAuthenticated" routerLink="/logout">
+          Logout
+        </a>
+        <a class="navbar-item is-warning" *ngIf="isAuthenticated" (click)="killDataAndRestart()">
+          Reset
+        </a>
+        <a class="navbar-item" *ngIf="!isAuthenticated" (click)="login()">
+          Login
+        </a>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <user-currency-display></user-currency-display>
+        </div>
       </div>
     </div>
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

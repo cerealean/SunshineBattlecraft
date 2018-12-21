@@ -17,6 +17,7 @@ import { NotifierService } from './notifier.service';
 import { StorageService } from './storage.service';
 import { CallbackComponent } from './components/callback/callback.component';
 import { LogoutComponent } from './logout/logout.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LogoutComponent } from './logout/logout.component';
     ResearchComponent,
     SettingsComponent,
     CallbackComponent,
-    LogoutComponent
+    LogoutComponent,
+    ProgressBarComponent
   ],
   imports: [
     BrowserModule,

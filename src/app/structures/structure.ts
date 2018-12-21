@@ -10,8 +10,8 @@ export abstract class Structure {
 
     constructor(public createdOn: Date = new Date(), public ticksTowardCompletion = 0) { }
 
-    public static import(structureData: Structure): Structure {
-        const newStructure = <Structure>{};
+    public static import<T extends Structure>(structureData: T): T {
+        const newStructure = <T>{};
         newStructure.createdOn = structureData.createdOn;
         newStructure.ticksTowardCompletion = structureData.ticksTowardCompletion;
         newStructure.currencyChangeOnTick = PlayerCurrency.import(structureData.currencyChangeOnTick);
@@ -24,9 +24,6 @@ export abstract class Structure {
         }
         if (!newStructure.canBuy) {
             newStructure.canBuy = Structure.prototype.canBuy;
-        }
-        if (!newStructure.clone) {
-            newStructure.clone = Structure.prototype.clone;
         }
         if (!newStructure.isComplete) {
             newStructure.isComplete = Structure.prototype.isComplete;
@@ -62,10 +59,6 @@ export abstract class Structure {
             && playerCurrency.gold >= this.cost.gold
             && playerCurrency.metal >= this.cost.metal
             && playerCurrency.wood >= this.cost.wood;
-    }
-
-    public clone() {
-        return new (<any>this.constructor)(new Date());
     }
 
     public isComplete(): boolean {

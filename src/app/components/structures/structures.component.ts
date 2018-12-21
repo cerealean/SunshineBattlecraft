@@ -14,7 +14,9 @@ export class StructuresComponent implements OnInit {
   purchaseStructure(structure: Structure) {
     if (structure.canBuy(this.playerControllerService.playerCurrency)) {
       this.playerControllerService.playerCurrency.subtractPlayerCurrency(structure.cost);
-      const objectToCreate = structure.clone();
+      const objectToCreate = Structure.import(structure);
+      objectToCreate.ticksTowardCompletion = 0;
+      objectToCreate.createdOn = new Date();
       this.playerControllerService.playerStructures = this.playerControllerService.playerStructures.concat([objectToCreate]);
     }
   }

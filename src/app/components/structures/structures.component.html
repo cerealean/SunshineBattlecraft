@@ -41,9 +41,11 @@
                 </div>
                 <div class="card-content hidden">
                   <div class="notification" *ngFor="let structure of group.value">
-                    <button (click)="destroyStructure(structure)">Destroy</button>
-                    {{structure.name}} created on {{structure.createdOn | date:'short'}} &nbsp;
-                    <span *ngIf="structure.ticksTowardCompletion < structure.ticksToComplete" class="green is-italic">(in progress: {{structure.ticksTowardCompletion}}/{{structure.ticksToComplete}} ticks)</span>
+                    <button *ngIf="structure.ticksTowardCompletion >= structure.ticksToComplete" class="button is-danger" (click)="destroyStructure(structure)">Destroy</button>
+                    <span class="is-info" *ngIf="structure.ticksTowardCompletion >= structure.ticksToComplete">&nbsp; {{structure.name}} created on {{structure.createdOn | date:'short'}} &nbsp;</span>
+                    <span *ngIf="structure.ticksTowardCompletion < structure.ticksToComplete" class="green is-italic">
+                      <progress-bar [classes]="'progress is-info'" [max]="structure.ticksToComplete" [value]="structure.ticksTowardCompletion" display="{{structure.ticksTowardCompletion}}/{{structure.ticksToComplete}}"></progress-bar>
+                    </span>
                   </div>
                 </div>
               </div>
