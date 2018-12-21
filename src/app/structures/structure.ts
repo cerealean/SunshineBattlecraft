@@ -7,6 +7,7 @@ export abstract class Structure {
     abstract cost: PlayerCurrency;
     abstract ticksToComplete: number;
     abstract currencyChangeOnTick: PlayerCurrency;
+    abstract icon: string;
 
     constructor(public createdOn: Date = new Date(), public ticksTowardCompletion = 0) { }
 
@@ -18,6 +19,7 @@ export abstract class Structure {
         newStructure.cost = PlayerCurrency.import(structureData.cost);
         newStructure.description = structureData.description;
         newStructure.name = structureData.name;
+        newStructure.icon = structureData.icon;
         newStructure.ticksToComplete = structureData.ticksToComplete;
         if (!newStructure.OnTick) {
             newStructure.OnTick = Structure.prototype.OnTick;
@@ -63,5 +65,9 @@ export abstract class Structure {
 
     public isComplete(): boolean {
         return this.ticksTowardCompletion >= this.ticksToComplete;
+    }
+
+    public getPercentComplete(): number {
+        return (this.ticksTowardCompletion / this.ticksToComplete) * 100;
     }
 }

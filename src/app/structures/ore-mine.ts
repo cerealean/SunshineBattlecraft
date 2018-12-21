@@ -7,4 +7,5 @@ export class OreMine extends Structure {
     public cost = new PlayerCurrency(220);
     public currencyChangeOnTick = new PlayerCurrency(0, 0, 10, 0);
     public ticksToComplete = 10;
+    public icon = 'fas fa-user-secret';
 }

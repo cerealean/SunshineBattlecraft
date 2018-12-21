@@ -7,4 +7,5 @@ export class Barracks extends Structure {
     public cost = new PlayerCurrency(500, 150, 100, 100);
     public currencyChangeOnTick = new PlayerCurrency(-10);
     public ticksToComplete = 13;
+    public icon = 'fas fa-gopuram';
 }

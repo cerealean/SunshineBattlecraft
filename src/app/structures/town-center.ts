@@ -7,4 +7,5 @@ export class TownCenter extends Structure {
     ticksToComplete = 0;
     cost = new PlayerCurrency(0, 0, 0, 0);
     currencyChangeOnTick = new PlayerCurrency(10, 0, 0, 0);
+    icon = 'fas fa-home';
 }
