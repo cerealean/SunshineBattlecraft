@@ -38,7 +38,7 @@
                   <progress-bar [classes]="'progress is-info'" [max]="structure.ticksToComplete" [value]="structure.ticksTowardCompletion"
                     display="{{structure.getPercentComplete() + '%'}}"></progress-bar> -->
               <span *ngFor="let structure of group.value" class="icon">
-                <i class="{{structure.icon}} fa-2x has-text-danger"></i>
+                <i class="{{structure.icon}} fa-2x" [class.in-progress]="!structure.isComplete()"></i>
               </span>
             </div>
           </div>
