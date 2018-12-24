@@ -7,6 +7,7 @@ import { PlayerControllerService } from '../../services/player-controller.servic
   styleUrls: ['./structures.component.scss']
 })
 export class StructuresComponent implements OnInit {
+  public selectedStructure: Structure;
   constructor(private playerControllerService: PlayerControllerService) { }
 
   ngOnInit() {}

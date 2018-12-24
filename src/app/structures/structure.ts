@@ -30,6 +30,9 @@ export abstract class Structure {
         if (!newStructure.isComplete) {
             newStructure.isComplete = Structure.prototype.isComplete;
         }
+        if(!newStructure.getPercentComplete) {
+            newStructure.getPercentComplete = Structure.prototype.getPercentComplete;
+        }
 
         return newStructure;
     }
