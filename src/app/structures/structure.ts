@@ -1,5 +1,6 @@
 import { TickAction } from '../models/tick-action';
 import { PlayerCurrency } from '../models/player-currency';
+import { Research } from '../research/research';
 
 export abstract class Structure {
     abstract name: string;
@@ -8,6 +9,7 @@ export abstract class Structure {
     abstract ticksToComplete: number;
     abstract currencyChangeOnTick: PlayerCurrency;
     abstract icon: string;
+    researchRequirements: Research[];
 
     constructor(public createdOn: Date = new Date(), public ticksTowardCompletion = 0) { }
 
@@ -21,6 +23,7 @@ export abstract class Structure {
         newStructure.name = structureData.name;
         newStructure.icon = structureData.icon;
         newStructure.ticksToComplete = structureData.ticksToComplete;
+        newStructure.researchRequirements = structureData.researchRequirements;
         if (!newStructure.OnTick) {
             newStructure.OnTick = Structure.prototype.OnTick;
         }
@@ -60,10 +63,12 @@ export abstract class Structure {
             throw Error('cost must be defined for structure!');
         }
 
-        return playerCurrency.food >= this.cost.food
+        const hasEnoughResources = playerCurrency.food >= this.cost.food
             && playerCurrency.gold >= this.cost.gold
             && playerCurrency.metal >= this.cost.metal
             && playerCurrency.wood >= this.cost.wood;
+
+        return hasEnoughResources;
     }
 
     public isComplete(): boolean {

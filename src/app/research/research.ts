@@ -1,5 +1,6 @@
 import { PlayerCurrency } from '../models/player-currency';
 import { TickAction } from '../models/tick-action';
+import { Structure } from '../structures/structure';
 
 export abstract class Research {
     abstract name: string;
@@ -7,6 +8,9 @@ export abstract class Research {
     abstract cost: PlayerCurrency;
     abstract ticksToComplete: number;
     ticksTowardCompletion = 0;
+    researchRequirements: Research[];
+    structureRequirements: Structure[];
+
     get isComplete(): boolean {
         return this.ticksTowardCompletion >= this.ticksToComplete;
     }

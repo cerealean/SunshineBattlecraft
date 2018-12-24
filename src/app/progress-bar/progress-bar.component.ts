@@ -17,8 +17,6 @@ export class ProgressBarComponent implements OnInit {
   ngOnInit() {
     if (this.max === null || this.max === undefined || isNaN(this.max)) {
       throw new Error('[max] must be provided on the Progress Bar component and must be a number!');
-    } else if (this.value === null || this.value === undefined || isNaN(this.value)) {
-      throw new Error('[value] must be provided on the Progress Bar component and must be a number!');
     }
   }
 
