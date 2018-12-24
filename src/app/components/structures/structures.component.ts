@@ -29,13 +29,11 @@ export class StructuresComponent implements OnInit {
     }
   }
 
-  toggleVisibility($event: MouseEvent) {
-    const target = <HTMLElement>$event.target;
-    const contentElement = target.parentElement.parentElement.getElementsByClassName('card-content')[0];
-    if (contentElement.classList.contains('hidden')) {
-      contentElement.classList.remove('hidden');
-    } else {
-      contentElement.classList.add('hidden');
-    }
+  selectStructure(structure: Structure): void {
+    this.selectedStructure = structure;
+  }
+
+  deselectStructure(): void {
+    this.selectedStructure = null;
   }
 }

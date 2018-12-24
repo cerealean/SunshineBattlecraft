@@ -30,7 +30,7 @@
             <div class="box">
               <h1 class="title">{{group.value[0].name}} ({{group.value.length}})</h1>
               <h2 class="subtitle">{{group.value[0].description}}</h2>
-              <span *ngFor="let structure of group.value" class="icon" (click)="selectedStructure = structure;" [class.in-progress]="!structure.isComplete()">
+              <span *ngFor="let structure of group.value" class="icon" (click)="selectStructure(structure)" [class.in-progress]="!structure.isComplete()">
                 <i class="{{structure.icon}} fa-2x"></i>
               </span>
             </div>
@@ -41,7 +41,7 @@
   </div>
 </section>
 <div class="modal is-active" *ngIf="selectedStructure">
-  <div class="modal-background" (click)="selectedStructure = null;"></div>
+  <div class="modal-background" (click)="deselectStructure()"></div>
   <div class="modal-content">
     <div class="box">
       <p class="title">
@@ -59,9 +59,9 @@
       <div *ngIf="selectedStructure.isComplete()">
         <em class="is-info">Created on {{selectedStructure.createdOn | date:'short'}}</em>
         <br />
-        <button class="button is-danger" (click)="destroyStructure(selectedStructure); selectedStructure = null;">Destroy</button>
+        <button class="button is-danger" (click)="destroyStructure(selectedStructure); deselectStructure();">Destroy</button>
       </div>
     </div>
   </div>
-  <button class="modal-close is-large" aria-label="close" (click)="selectedStructure = null;"></button>
+  <button class="modal-close is-large" aria-label="close" (click)="deselectStructure()"></button>
 </div>
